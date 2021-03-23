@@ -1,6 +1,8 @@
 // Dependencies
 const Movie = require("../models/movie");
 
+
+// Post Operation with Movie Route 
 exports.post_movie = (req, res) => {
   const movie = new Movie({
     title: req.body.title,
