@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const movieRoute = require('./routers/movie');
+const userRoute = require("./routers/user");
 
 // Create a express function 
 const app = express();                                            
@@ -29,7 +30,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/marvel_movie', ()=>{
 });
 
 // Router define
-app.use('/marvel', movieRoute);                                             
+app.use('/marvel', movieRoute);  
+app.use('/marvel', userRoute);
+
 
 
 // PORT Number , where we run our server

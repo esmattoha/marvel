@@ -16,9 +16,8 @@ exports.post_movie = (req, res) => {
       res.status(201).send(result);
     })
     .catch((err) => {
-    //   res.status(422).json({
-    //     message: "Something went wrong , please try some time later! ",
-    //   });
-    console.log(err);
+      res.status(422).json({
+        message: "Something went wrong , please try some time later! ",
+      });
     });
 };
