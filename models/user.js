@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;               // Schema Define
 
 
 const UserSchema = new Schema({             // Create a New Schema 
-    gmail:{
+    email:{
         type: String,
         required: true
     },
