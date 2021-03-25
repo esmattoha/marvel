@@ -2,16 +2,19 @@
 const express = require('express');
 const multer = require('multer');
 
+const movieController = require('../controllers/movie');
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '../upload/');
+      cb(null, './upload/');
     },
     filename: function (req, file, cb) {
-      cb(null, new Date().toISOString() + file.originalname);
+      cb(null, Date.now() + file.originalname);
+      console.log(file);
     }
   });
 
-const upload = multer({ storage: storage});
+const upload = multer({ storage: storage });
 
 // const movieController = require('../controllers/movie');
 const Movie = require('../models/movie');
@@ -19,7 +22,7 @@ const Movie = require('../models/movie');
 const router = express.Router();
 
 router.post('/movie', upload.single('imageUrl'), (req, res)=>{
-    console.log(req.file);
+    // console.log(req.file);
     const movie = new Movie({
         title: req.body.title,
         description: req.body.description,
@@ -39,5 +42,9 @@ router.post('/movie', upload.single('imageUrl'), (req, res)=>{
           });
         });
 });
+
+router.get('/movies' , movieController.get_movies);
+
+router.get('/movie/:id', movieController.get_movie);
 
 module.exports = router;
