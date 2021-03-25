@@ -1,6 +1,10 @@
 // Dependencies
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+
+const jwtOptions = {};
+jwtOptions.secrectOrKey = "thisIsASecretKey";
 
 // Post operation with User Sign_up route
 exports.post_SignUp = (req, res) => {
@@ -32,17 +36,20 @@ exports.post_Login =(req, res ) =>{
 
   User.findOne({ email : email})
   .exec()
-  .then(result =>{
-    if(!result){
+  .then(user =>{
+    if(!user){
       res.status(404).json({
         message:"Invalid Email , please try again! "
       })
     }
-    bcrypt.compare(password, result.password)
+    bcrypt.compare(password, user.password)
     .then(isMatch=>{
       if(isMatch){
-        res.status(201).json({
-          message:" Login Successfull! "
+        const payload = ({ id: user._id});
+        const token =jwt.sign(payload, jwtOptions.secrectOrKey);
+        res.json({
+          message:'Okay',
+          token
         })
       }
       else{
