@@ -10,11 +10,21 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);
-      console.log(file);
     }
   });
 
-const upload = multer({ storage: storage });
+function fileFilter(req, file ,cb ){
+    if(file.mimetype === "image/jpeg" ||
+        file.mimetype === "image/jpg" || 
+        file.mimetype === "image/png"){
+          cb(null , true);
+    }
+    else{
+      cb(null, false);
+    }
+} 
+
+const upload = multer({storage: storage , fileFilter });
 
 // const movieController = require('../controllers/movie');
 const Movie = require('../models/movie');
@@ -22,7 +32,7 @@ const Movie = require('../models/movie');
 const router = express.Router();
 
 router.post('/movie', upload.single('imageUrl'), (req, res)=>{
-    // console.log(req.file);
+    console.log(req.file);
     const movie = new Movie({
         title: req.body.title,
         description: req.body.description,
