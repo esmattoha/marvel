@@ -29,6 +29,10 @@ const MovieSchema = new Schema({             // Create a New Schema
     point:{
         type: Number,
         required: true
+    },
+    imagePath:{
+        type: String,
+        required: true
     }
 });
 

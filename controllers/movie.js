@@ -4,26 +4,27 @@ const mongoose = require('mongoose');
 
 
 // Post Operation with Movie Route 
-// exports.post_movie = (req, res) => {
-//   const movie = new Movie({
-//     title: req.body.title,
-//     description: req.body.description,
-//     releaseDate: req.body.releaseDate,
-//     genre: req.body.genre,
-//     timeDuration: req.body.timeDuration,
-//     point: req.body.point,
-//   });
-//   movie
-//     .save()
-//     .then((result) => {
-//       res.status(201).send(result);
-//     })
-//     .catch((err) => {
-//       res.status(422).json({
-//         message: "Something went wrong , please try some time later! ",
-//       });
-//     });
-// };
+exports.post_movie =  (req, res)=>{
+  const movie = new Movie({
+      title: req.body.title,
+      description: req.body.description,
+      releaseDate: req.body.releaseDate,
+      genre: req.body.genre,
+      timeDuration: req.body.timeDuration,
+      point: req.body.point,
+      imagePath: req.file.path
+    });
+    movie
+      .save()
+      .then((result) => {
+        res.status(201).send(result);
+      })
+      .catch((err) => {
+        res.status(422).json({
+          message: "Something went wrong , please try some time later! ",
+        });
+      });
+};
 
 // Get operation with Movies route
 exports.get_movies = (req, res)=>{
